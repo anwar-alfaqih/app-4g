@@ -33,20 +33,59 @@
     
     <style>
         :root {
-            --primary: #004aad;
-            --main-gradient: linear-gradient(135deg, #004aad 0%, #001e46 100%);
-            --bg: #ffffff;
-        }
+    --primary: #004aad;
+    --main-gradient: linear-gradient(135deg, #004aad 0%, #001e46 100%);
+    --bg: #ffffff;
+    --text-color: #002d6a;
+    --card-bg: #f8f9fa;
+}
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-            user-select: none; -webkit-user-select: none;
-            touch-action: pan-y;
-        }
+[data-theme="dark"] {
+    --primary: #3d94ff;
+    --main-gradient: linear-gradient(135deg, #1e1e1e 0%, #000000 100%);
+    --bg: #121212;
+    --text-color: #e1e1e1;
+    --card-bg: #1e1e1e;
+}
 
-        body { background: var(--bg); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+    user-select: none; -webkit-user-select: none;
+    touch-action: pan-y;
+}
 
+body { 
+    background: var(--bg); 
+    color: var(--text-color);
+    height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+    transition: background 0.3s ease;
+}
+
+#theme-btn {
+    position: fixed; 
+    top: 20px; 
+    left: 20px; 
+    background: rgba(0,74,173,0.1); 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    color: var(--primary); 
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+[data-theme="dark"] #theme-btn {
+    background: rgba(255,255,255,0.1);
+}
         #splash {
             position: fixed; inset: 0; background: var(--main-gradient);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -124,6 +163,9 @@
         <p style="color: #666; max-width: 280px;">يبدو أن الموقع الرسمي لا يستجيب حالياً أو أن اتصالك بالإنترنت ضعيف او انك خارج الأراضي اليمنيه.</p>
         <button class="btn-start" style="margin-top: 30px; max-width: 250px;" onclick="handleRedirection()">إعادة المحاولة</button>
         <div class="retry-link" onclick="backToHome()">العودة للرئيسية</div>
+    </div>
+        <div id="theme-btn" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
     </div>
     <div id="info-btn" onclick="toggleInfo()" style="position: fixed; top: 20px; right: 20px; background: rgba(0,74,173,0.1); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--primary); font-weight: bold; z-index: 999;">i</div>
     <div id="info-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10001; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
@@ -212,6 +254,26 @@
         }
         document.addEventListener('gesturestart', (e) => e.preventDefault());
         document.addEventListener('dblclick', (e) => e.preventDefault());
+
+
+        function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme); 
+    
+    updateThemeUI(newTheme);
+}
+
+function updateThemeUI(theme) {
+    const icon = document.getElementById('theme-icon');
+    icon.innerText = (theme === 'dark') ? '☀️' : '🌙';
+}
+
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeUI(savedTheme);
     </script>
 </body>
 </html>
