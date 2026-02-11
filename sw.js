@@ -1,4 +1,4 @@
-const CACHE_NAME = 'app-anwar-alfaqih-yemen-v7';
+const CACHE_NAME = 'app-anwar-alfaqih-yemen-v8';
 
 const OFFLINE_URL = 'index.html';
 
