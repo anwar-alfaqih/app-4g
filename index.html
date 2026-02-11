@@ -146,7 +146,19 @@ body {
         <p>بوابتك السريعة للاستعلام عن رصيد الباقات واستهلاك الإنترنت بكل سهولة وموثوقية.</p>
         
         <button class="btn-start" id="main-btn" onclick="handleRedirection()">بدء الاستعلام</button>
+        <div id="expiry-section" style="margin-top: 20px; padding: 15px; background: var(--card-bg); border-radius: 15px; border: 1px solid rgba(0,74,173,0.1); text-align: center;">
+    <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--primary);">⏳ موعد تجديد الباقة</h4>
+    
+    <div id="setup-expiry">
+        <input type="date" id="expiry-date" style="padding: 8px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: sans-serif;">
+        <button onclick="setExpiryDate()" style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 8px; margin-top: 5px; cursor: pointer;">حفظ</button>
+    </div>
 
+    <div id="countdown-display" style="display: none;">
+        <div id="timer" style="font-size: 18px; font-weight: bold; color: #d9534f; margin-bottom: 5px;">00ي : 00س : 00د</div>
+        <button onclick="resetExpiry()" style="font-size: 11px; background: none; border: none; color: var(--text-secondary); text-decoration: underline; cursor: pointer;">تغيير الموعد</button>
+    </div>
+    </div>
         <div class="social">
             <a href="fb://facewebmodal/f?href=https://www.facebook.com/share/1C3eEtftYM/" class="social-icon" style="background:#1877f2;">
                 <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
@@ -255,6 +267,51 @@ body {
         document.addEventListener('gesturestart', (e) => e.preventDefault());
         document.addEventListener('dblclick', (e) => e.preventDefault());
 
+        let countdownInterval;
+
+function setExpiryDate() {
+    const dateInput = document.getElementById('expiry-date').value;
+    if (!dateInput) return alert("يرجى اختيار التاريخ");
+
+    localStorage.setItem('yemen4g_expiry', dateInput);
+    startCountdown(dateInput);
+}
+
+function startCountdown(expiryDate) {
+    document.getElementById('setup-expiry').style.display = 'none';
+    document.getElementById('countdown-display').style.display = 'block';
+
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    countdownInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = new Date(expiryDate).getTime() - now;
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('timer').innerText = "انتهت الباقة!";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('timer').innerText = `${days}ي : ${hours}س : ${minutes}د`;
+    }, 1000);
+}
+
+function resetExpiry() {
+    localStorage.removeItem('yemen4g_expiry');
+    clearInterval(countdownInterval);
+    document.getElementById('setup-expiry').style.display = 'block';
+    document.getElementById('countdown-display').style.display = 'none';
+}
+
+const savedExpiry = localStorage.getItem('yemen4g_expiry');
+if (savedExpiry) {
+    startCountdown(savedExpiry);
+}
 
         function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
