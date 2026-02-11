@@ -349,44 +349,7 @@ const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 updateThemeUI(savedTheme);
 
-      // 1. طلب الإذن فور تشغيل التطبيق
-if ("Notification" in window) {
-    Notification.requestPermission();
-}
-        function sendYemen4GNotification(title, message) {
-    if (Notification.permission === "granted") {
-        navigator.serviceWorker.ready.then(function(registration) {
-            registration.showNotification(title, {
-                body: message,
-                icon: 'icon-192x192.png', // تأكد من وجود صورة بهذا الاسم في مجلدك
-                vibrate: [200, 100, 200],
-                badge: 'icon-192x192.png'
-            });
-        });
-    }
-}
-        function checkAndNotify() {
-    const now = new Date();
-    const hour = now.getHours(); // يجلب الساعة الحالية (0-23)
-    const today = now.toDateString(); // يجلب تاريخ اليوم كـ نص (مثلاً: Wed Feb 11 2026)
-    
-    // جلب تاريخ آخر إشعار تم إرساله من ذاكرة الهاتف
-    const lastTimeSent = localStorage.getItem('last_notification_date');
 
-    // إذا لم نرسل إشعاراً اليوم
-    if (lastTimeSent !== today) {
-        // فحص هل الساعة الآن 10 صباحاً أو 8 مساءً؟
-        if (hour === 1:40 || hour === 20) {
-            sendYemen4GNotification("يمن فور جي", "حان وقت فحص رصيدك للبقاء على اتصال!");
-            
-            // حفظ تاريخ اليوم في الذاكرة لكي لا يتكرر الإشعار في نفس الساعة
-            localStorage.setItem('last_notification_date', today);
-        }
-    }
-}
-
-// تشغيل الفحص فور فتح التطبيق
-checkAndNotify();
         
     </script>
 </body>
