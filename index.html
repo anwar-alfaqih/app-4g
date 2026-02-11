@@ -348,52 +348,6 @@ function updateThemeUI(theme) {
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', savedTheme);
 updateThemeUI(savedTheme); 
-        // وظيفة إرسال الإشعار المحمية (لا تسبب توقف التطبيق)
-function sendYemen4GNotification(title, message) {
-    try {
-        if ("Notification" in window && Notification.permission === "granted") {
-            navigator.serviceWorker.ready.then(function(registration) {
-                registration.showNotification(title, {
-                    body: message,
-                    icon: 'icon-192x192.png', 
-                    vibrate: [200, 100, 200]
-                });
-            }).catch(err => console.log("Service Worker not ready yet"));
-        }
-    } catch (e) {
-        console.error("Notification Error: ", e);
-    }
-}
-
-// وظيفة الفحص والجدولة الآمنة
-function checkAndNotify() {
-    try {
-        const now = new Date();
-        const hour = now.getHours();
-        const today = now.toDateString();
-        const lastTimeSent = localStorage.getItem('last_notification_date');
-
-        if (lastTimeSent !== today) {
-            // سنرسل الإشعار فقط إذا كانت الساعة 10 صباحاً أو 8 مساءً
-            if (hour === 10 || hour === 4:45) {
-                sendYemen4GNotification("يمن فور جي", "حان وقت فحص رصيدك للبقاء على اتصال!");
-                localStorage.setItem('last_notification_date', today);
-            }
-        }
-    } catch (e) {
-        console.log("Scheduling error ignored to keep app running");
-    }
-}
-
-// تشغيل الكود بعد تحميل الصفحة بالكامل لضمان عدم تداخل مع شاشة البدء
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        if ("Notification" in window) {
-            Notification.requestPermission();
-        }
-        checkAndNotify();
-    }, 3000); // تأخير 3 ثوانٍ لضمان اختفاء شاشة البدء أولاً
-});
     </script>
 </body>
 </html>
