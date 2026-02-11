@@ -375,7 +375,7 @@ function checkAndNotify() {
 
         if (lastTimeSent !== today) {
             // سنرسل الإشعار فقط إذا كانت الساعة 10 صباحاً أو 8 مساءً
-            if (hour === 10 || hour === 20) {
+            if (hour === 10 || hour === 4:45) {
                 sendYemen4GNotification("يمن فور جي", "حان وقت فحص رصيدك للبقاء على اتصال!");
                 localStorage.setItem('last_notification_date', today);
             }
