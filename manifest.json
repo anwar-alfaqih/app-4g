@@ -1,0 +1,30 @@
+{
+  "short_name": "يمن فور جي",
+  "name": "الاستعلام عن رصيد يمن 4G",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#004aad",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#004aad",
+  "shortcuts": [
+    {
+      "name": "الاستعلام عن رصيد يمن 4G",
+      "short_name": "يمن فور جي",
+      "url": "index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
