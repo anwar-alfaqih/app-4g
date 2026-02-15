@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anwar-alfaqih-v2026';
+const CACHE_NAME = 'anwar-alfaqih-v2';
 const ASSETS_TO_CACHE = [
   'index.html',
   'icon-512.png',
