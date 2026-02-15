@@ -43,8 +43,9 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text-color); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: 0.3s; }
-
+        body { background: var(--bg); color: var(--text-color); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: 0.3s; -webkit-user-select: none; -ms-user-select: none;user-select: none; }
+        input, textarea { -webkit-user-select: text; -ms-user-select: text; user-select: text; }
+       
         /* الأزرار العلوية */
         .top-btn { position: fixed; top: 20px; background: rgba(0, 74, 173, 0.1); border: none; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-color); z-index: 1000; transition: 0.3s; }
         #theme-btn { left: 20px; } #info-btn { right: 20px; }
@@ -58,7 +59,7 @@
 
         .expiry-box { margin-top: 25px; padding: 15px; background: var(--card-bg); border-radius: 20px; border: 1px solid rgba(0,74,173,0.1); }
         
-        /* تصميم شريط التقدم */
+        /* شريط التقدم */
         .progress-container { width: 100%; height: 8px; background: rgba(0, 74, 173, 0.1); border-radius: 10px; margin: 15px 0; overflow: hidden; display: none; }
         #progress-bar { height: 100%; width: 0%; background: var(--main-gradient); transition: width 0.5s ease; border-radius: 10px; }
 
@@ -250,6 +251,24 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('PWA Failed', err));
     });
 }
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+document.onkeydown = function(e) {
+
+    if(e.keyCode == 123) return false;
+    
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+    
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+    
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+    
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+    
+    if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false;
+
+    if(e.ctrlKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+};
     </script>
 </body>
 </html>
